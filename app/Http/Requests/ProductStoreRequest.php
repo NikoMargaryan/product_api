@@ -9,46 +9,46 @@ class ProductStoreRequest extends FormRequest
     /**
      * Determine if the user is authorized to make this request.
      */
-    public function authorize(): bool
+    public function authorize()
     {
-//        return false;
         return true;
     }
 
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
+     * @return array
      */
+    /** @var array */
     public function rules()
     {
-
-        if(request()->isMethod('post')) {
+        if ($this->getMethod() == 'POST') {
             return [
-                'name' => 'required|string|max:258',
+                'name' => 'required|string',
                 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                'description' => 'required|string'
+                'description' => 'required|string',
             ];
         } else {
             return [
                 'name' => 'required|string|max:258',
                 'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                'description' => 'required|string'
+                'description' => 'required|string',
             ];
         }
     }
+
     public function messages()
     {
-        if(request()->isMethod('post')) {
+        if ($this->getMethod() == 'POST') {
             return [
                 'name.required' => 'Name is required!',
                 'image.required' => 'Image is required!',
-                'description.required' => 'Descritpion is required!'
+                'description.required' => 'Description is required!',
             ];
         } else {
             return [
                 'name.required' => 'Name is required!',
-                'description.required' => 'Descritpion is required!'
+                'description.required' => 'Description is required!',
             ];
         }
     }
